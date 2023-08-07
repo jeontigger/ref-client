@@ -1,3 +1,4 @@
 export enum RouteConst {
-    LandingPage = "/",
+    LandingPage = "/Loading",
+    HomePage = "/"
 }
