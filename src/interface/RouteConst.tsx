@@ -1,4 +1,8 @@
 export enum RouteConst {
-    LandingPage = "/Loading",
-    HomePage = "/"
+    HomePage = "/",
+    Signup = "/signup",
+    Calculate = "/calculate",
+    CookingDB = "/cookingDB",
+    Inventory = "/inventory",
+    Settlement = "/settlement"
 }
