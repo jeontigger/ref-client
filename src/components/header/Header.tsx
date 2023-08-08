@@ -7,7 +7,7 @@ export const Header = () => {
       <div className='flex'>
         <TotalGNB /> <div>OOO님 안녕하세요!</div><Button variant='contained'>LOG OUT</Button>
       </div>
-      <Button variant="contained" style={{"background":"red"}}>test button</Button>
+      {/* <Button variant="contained" style={{"background":"red"}}>test button</Button> */}
     </>
   );
 };

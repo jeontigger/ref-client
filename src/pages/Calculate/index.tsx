@@ -1,3 +1,16 @@
+import  Button  from '@mui/material/Button';
+import { Header } from '../../components/header/Header';
+
 export const Calculate = () => {
-  return <>정산페이지</>;
+  return (
+    <>
+      <Header /> 
+      <span>날짜드롭박스 위치</span>
+      <Button variant='contained'>정 산</Button>
+      <div>
+        
+      </div>
+      
+    </>
+  );
 };
