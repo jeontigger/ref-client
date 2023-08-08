@@ -1,22 +1,30 @@
 import {useRef} from 'react';
+import {DropDownCalendar} from '../calendar/DropDownCalendar'
 
 export const SignUpBox = () => {
     // const [name, setFirstName] = useState('이름');
 
     
-    const ref = useRef<HTMLInputElement>(null);
-    const handleClick = (e:any) => {
-        e.preventDefault();
-        if(ref.current){
-            console.log(ref.current.value);
-        }
-        console.log('handleclick');
+    const idRef = useRef<HTMLInputElement>(null);
+    const IDDuplicateCheck = (e:any) => {
+      console.log(idRef.current?.value);
+      e.preventDefault();
     }
+    const submitClick = (e:any) => {
+        e.preventDefault();
+    }
+
+
+    const cancelClick = (e:any) =>{
+      window.location.href = "/";
+
+      e.preventDefault();
+    }
+    
     
     const pwRef = useRef<HTMLInputElement>(null);
     const pwCompareRef = useRef<HTMLInputElement>(null);
     const CompareTextRef = useRef<HTMLSpanElement>(null);
-
     const PWC = () => {
         if(pwRef.current?.value === pwCompareRef.current?.value){
             if (CompareTextRef.current) {
@@ -33,19 +41,19 @@ export const SignUpBox = () => {
         <>
         
         <form >
-      <input type= "text" ref = {ref} placeholder = "이름" /><button type="submit">중복확인</button><br/>
-      <input type= "password" ref = {pwRef} placeholder = "password"  /><br/>
-      <input type= "password" ref = {pwCompareRef} placeholder = "password" onChange={PWC} /><br/>
+      <input type= "text" ref = {idRef} placeholder = "아이디" /><button type="submit" onClick={IDDuplicateCheck}>중복확인</button><br/>
+      <input type= "password" ref = {pwRef} placeholder = "비밀번호" onChange={PWC} /><br/>
+      <input type= "password" ref = {pwCompareRef} placeholder = "비밀번호 확인" onChange={PWC} /><br/>
       <span ref = {CompareTextRef}>비밀번호를 입력해주세요</span><br/>
       
       <input type= "text" placeholder = "성명" /><br/>
-      <input type= "text" placeholder = "생년월일" /><br/>
+      <DropDownCalendar/><br/>
       <input type= "text" placeholder = "닉네임" /><br/>
       <input type= "text" placeholder = "이메일" /><br/>
-      <button type="submit">
+      <button type="submit" onClick = {cancelClick}>
         취소
       </button>
-      <button type="submit" onClick = {handleClick}>
+      <button type="submit" onClick = {submitClick}>
         등록
       </button>
       
