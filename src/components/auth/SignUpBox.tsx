@@ -13,7 +13,11 @@ export const SignUpBox = () => {
    */
   const idRef = useRef<HTMLInputElement>(null);
   /**
-   * ID 중복 검사 부울 변수
+   * ID 중복 여부 부울 변수
+   */
+  let idDuplicateCheckBool: boolean = false;
+  /**
+   * ID 중복 여부 부울 변수
    */
   let idValidBool: boolean = false;
   /**
@@ -24,6 +28,7 @@ export const SignUpBox = () => {
   const IDDuplicateCheck = (e: any) => {
     console.log(idRef.current?.value);
     idValidBool = true;
+    idDuplicateCheckBool = true;
     e.preventDefault();
   };
 
@@ -90,14 +95,56 @@ export const SignUpBox = () => {
       }
     }
   };
+  const invalidReasonRef = useRef<HTMLSpanElement>(null);
+
+  /**
+   * 제출전 유효 검사 함수
+   * @returns
+   */
   const isAllValid = () => {
-    if (!idValidBool) return false;
-    if (!passwordValidBoolean) return false;
-    if (!emailValidBoolean) return false;
+    if (!idDuplicateCheckBool) {
+      if (invalidReasonRef.current) {
+        invalidReasonRef.current.textContent = "ID가 중복검사가 필요합니다.";
+      }
+      return false;
+    }
+    if (!idValidBool) {
+      if (invalidReasonRef.current) {
+        invalidReasonRef.current.textContent = "ID가 중복 됩니다.";
+      }
+      return false;
+    }
+    if (!passwordValidBoolean) {
+      if (invalidReasonRef.current) {
+        invalidReasonRef.current.textContent = "비밀번호가 일치하지 않습니다.";
+      }
+      return false;
+    }
+    if (!emailValidBoolean) {
+      if (invalidReasonRef.current) {
+        invalidReasonRef.current.textContent = "이메일이 유효하지 않습니다.";
+      }
+      return false;
+    }
     const calendarFields = document.querySelectorAll("select");
-    if (calendarFields[0].value == "year") return false;
-    if (calendarFields[1].value == "month") return false;
-    if (calendarFields[2].value == "day") return false;
+    if (calendarFields[0].value == "") {
+      if (invalidReasonRef.current) {
+        invalidReasonRef.current.textContent = "생년월일을 선택해주세요.";
+      }
+      return false;
+    }
+    if (calendarFields[1].value == "") {
+      if (invalidReasonRef.current) {
+        invalidReasonRef.current.textContent = "생년월일을 선택해주세요.";
+      }
+      return false;
+    }
+    if (calendarFields[2].value == "") {
+      if (invalidReasonRef.current) {
+        invalidReasonRef.current.textContent = "생년월일을 선택해주세요.";
+      }
+      return false;
+    }
     return true;
   };
   /**
@@ -107,7 +154,7 @@ export const SignUpBox = () => {
     [key: string]: any;
   }
   /**
-   * 미구현 상태의 제출 버튼 함수.
+   * 제출 버튼 함수.
    * @param e 리랜더링을 멈추기 위한 기법으로 잠시 사용
    */
   const submitClick = (e: any) => {
@@ -201,6 +248,7 @@ export const SignUpBox = () => {
         />
         <br />
         <span ref={emailValidTextRef}>이메일을 입력하세요</span> <br />
+        <span ref={invalidReasonRef}></span> <br />
         <button type="submit" onClick={cancelClick}>
           취소
         </button>
