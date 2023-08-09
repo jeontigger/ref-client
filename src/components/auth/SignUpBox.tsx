@@ -133,7 +133,7 @@ export const SignUpBox = () => {
 
   return (
     <>
-      <form>
+      <div>
         <label>ID: </label>
         <input
           type="text"
@@ -190,7 +190,7 @@ export const SignUpBox = () => {
         <button type="submit" onClick={submitClick}>
           등록
         </button>
-      </form>
+      </div>
     </>
   );
 };
