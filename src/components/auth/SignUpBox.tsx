@@ -117,7 +117,15 @@ export const SignUpBox = () => {
       const inputField = inputFields[i] as HTMLInputElement;
       formData[inputField.name] = inputField.value;
     }
+    fetch("/api/submit-form", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
     console.log(formData);
+
     e.preventDefault();
     return true;
   };
