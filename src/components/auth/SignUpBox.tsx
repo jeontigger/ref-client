@@ -94,6 +94,10 @@ export const SignUpBox = () => {
     if (!idValidBool) return false;
     if (!passwordValidBoolean) return false;
     if (!emailValidBoolean) return false;
+    const calendarFields = document.querySelectorAll("select");
+    if (calendarFields[0].value == "year") return false;
+    if (calendarFields[1].value == "month") return false;
+    if (calendarFields[2].value == "day") return false;
     return true;
   };
   /**
@@ -108,6 +112,7 @@ export const SignUpBox = () => {
    */
   const submitClick = (e: any) => {
     const inputFields = document.querySelectorAll("input");
+    const calendarFields = document.querySelectorAll("select");
     const formData: FormData = {};
     if (!isAllValid()) {
       console.log("not form");
@@ -116,6 +121,10 @@ export const SignUpBox = () => {
     for (let i = 0; i < inputFields.length; i++) {
       const inputField = inputFields[i] as HTMLInputElement;
       formData[inputField.name] = inputField.value;
+    }
+    for (let i = 0; i < calendarFields.length; i++) {
+      const calendarField = calendarFields[i] as HTMLSelectElement;
+      formData[calendarField.name] = calendarField.value;
     }
     fetch("/api/submit-form", {
       method: "POST",
@@ -177,7 +186,7 @@ export const SignUpBox = () => {
         <span ref={CompareTextRef}>비밀번호를 입력해주세요</span>
         <br />
         <label>성명: </label>
-        <input type="text" placeholder="성명" id="name" required />
+        <input type="text" placeholder="성명" name="name" required />
         <br />
         <label>생년월일: </label>
         <DropDownCalendar />
