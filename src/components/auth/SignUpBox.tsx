@@ -94,11 +94,13 @@ export const SignUpBox = () => {
   return (
     <>
       <form>
+        <label>ID: </label>
         <input type="text" ref={idRef} placeholder="아이디" />
         <button type="submit" onClick={IDDuplicateCheck}>
           중복확인
         </button>
         <br />
+        <label>비밀번호: </label>
         <input
           type="password"
           ref={pwRef}
@@ -106,6 +108,7 @@ export const SignUpBox = () => {
           onChange={passwordConfirm}
         />
         <br />
+        <label>비밀번호확인: </label>
         <input
           type="password"
           ref={pwCompareRef}
@@ -115,12 +118,13 @@ export const SignUpBox = () => {
         <br />
         <span ref={CompareTextRef}>비밀번호를 입력해주세요</span>
         <br />
+        <label>성명: </label>
         <input type="text" placeholder="성명" />
         <br />
+        <label>생년월일: </label>
         <DropDownCalendar />
         <br />
-        <input type="text" placeholder="닉네임" />
-        <br />
+        <label>이메일: </label>
         <input type="text" placeholder="이메일" onChange={validateEmail} />
         <br />
         <span ref={emailValidTextRef}></span> <br />
