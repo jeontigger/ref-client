@@ -201,9 +201,10 @@ export const SignUpBox = () => {
     <>
       <form>
         <div>
-          <label>ID: </label>
+          <label htmlFor="id">ID: </label>
           <input
             type="text"
+            id="id"
             placeholder="아이디"
             required
             onChange={(event) =>
@@ -213,18 +214,20 @@ export const SignUpBox = () => {
           <button onClick={checkDuplicate}>중복확인</button>
         </div>
         <div>
-          <label>비밀번호: </label>
+          <label htmlFor="pw">비밀번호: </label>
           <input
             type="password"
+            id="pw"
             placeholder="비밀번호"
             onChange={(event) => handleValueFilled(event, setPw, SetIsFilledPw)}
             required
           />
         </div>
         <div>
-          <label>비밀번호확인: </label>
+          <label htmlFor="cpw">비밀번호확인: </label>
           <input
             type="password"
+            id="cpw"
             placeholder="비밀번호 확인"
             onChange={(event) =>
               handleValueFilled(event, setCpw, SetIsFilledCpw)
@@ -238,12 +241,12 @@ export const SignUpBox = () => {
           <label htmlFor="name">성명: </label>
           <input
             type="text"
+            id="name"
             placeholder="성명"
             required
             onChange={(event) =>
               handleValueFilled(event, setNameValue, setIsFilledName)
             }
-            id="name"
           />
         </div>
         <div>
@@ -251,9 +254,10 @@ export const SignUpBox = () => {
           <DropDownCalendar />
         </div>
         <div>
-          <label>이메일: </label>
+          <label htmlFor="email">이메일: </label>
           <input
             type="text"
+            id="email"
             placeholder="이메일"
             onChange={(event) =>
               handleValueFilled(event, setEmailValue, setIsFilledEmail)
