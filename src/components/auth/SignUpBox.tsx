@@ -1,152 +1,168 @@
-import { useRef } from "react";
+import { useEffect, useState } from "react";
 import { DropDownCalendar } from "../calendar/DropDownCalendar";
+import { Link } from "react-router-dom";
 
 /**
  * 회원가입 입력상자 컴포넌트
  * @returns
  */
 export const SignUpBox = () => {
-  // const [name, setFirstName] = useState('이름');
+  const [idValue, setIdValue] = useState("");
+  const [isFilledId, SetIsFilledId] = useState(false);
+  useEffect(() => {
+    setCheckIdDuplicate(false);
+  }, [idValue]);
+
+  const [checkIdDuplicate, setCheckIdDuplicate] = useState(false);
+  const [isNotDuplicate, setIsNotDuplicate] = useState(false);
 
   /**
-   * ID 인풋 박스 Ref 변수
+   * 아이디 중복 체크 버튼 클릭시 호출하는 함수
    */
-  const idRef = useRef<HTMLInputElement>(null);
-  /**
-   * ID 중복 여부 부울 변수
-   */
-  let idDuplicateCheckBool: boolean = false;
-  /**
-   * ID 중복 여부 부울 변수
-   */
-  let idValidBool: boolean = false;
-  /**
-   * ID 중복 체크하기위해 ID 인풋 박스의 Ref변수를 가져와 출력하는 함수.
-   * 추후 ref변수로 ID를 중복데이터와 검사해야 함
-   * @param e 리랜더링을 멈추기 위한 기법으로 잠시 사용
-   */
-  const IDDuplicateCheck = (e: any) => {
-    console.log(idRef.current?.value);
-    idValidBool = true;
-    idDuplicateCheckBool = true;
-    e.preventDefault();
-  };
+  const checkDuplicate = () => {
+    setCheckIdDuplicate(true);
 
-  /**
-   * 비밀번호 박스 useref
-   */
-  const pwRef = useRef<HTMLInputElement>(null);
-  /**
-   * 비밀번호 확인 박스 useref
-   */
-  const pwCompareRef = useRef<HTMLInputElement>(null);
-  /**
-   * 비밀번호 일치 여부 출력 텍스트 useref
-   */
-  const CompareTextRef = useRef<HTMLSpanElement>(null);
-  /**
-   * 비밀번호 유효 여부 부울 변수
-   */
-  let passwordValidBoolean: boolean = false;
-  /**
-   * 비밀번호 일치 여부 출력 함수. password 박스와 passwordcheck 박스 모두 적용시켜야 함
-   */
-  const passwordConfirm = () => {
-    if (pwRef.current?.value === pwCompareRef.current?.value) {
-      if (CompareTextRef.current) {
-        CompareTextRef.current.textContent = "비밀번호가 일치합니다!";
-      }
-      passwordValidBoolean = true;
+    // TO DO 아이디 중복 체크하는 로직
+    if (idValue == "aaa") {
+      setIsNotDuplicate(false);
+      console.log(idValue, "duplicate");
     } else {
-      if (CompareTextRef.current) {
-        CompareTextRef.current.textContent = "비밀번호가 일치하지 않습니다!";
-      }
-      passwordValidBoolean = false;
+      setIsNotDuplicate(true);
+      console.log(idValue, "not duplicate");
     }
   };
 
-  /**
-   * 이메일 주소 체크를 위한 텍스트 박스 ref 변수
-   */
-  const emailValidTextRef = useRef<HTMLSpanElement>(null);
-  /**
-   * 이메일 유효 여부 부울 변수
-   */
-  let emailValidBoolean: boolean = false;
-  /**
-   * 이메일 주소 체크를 위한 함수
-   */
-  const validateEmail = (e: any) => {
-    const email = e.target.value;
-    // 이메일 주소 체크를 위한 정규표현식
+  const [pw, setPw] = useState("");
+  const [cpw, setCpw] = useState("");
+  const [isFilledPw, SetIsFilledPw] = useState(false);
+  const [isFilledCpw, SetIsFilledCpw] = useState(false);
+  const [pwValid, setpwValid] = useState(false);
+  const [confirmPwMessage, setConfirmPwMessage] =
+    useState("비밀번호를 입력해주세요");
+
+  useEffect(() => {
+    if (pw == cpw) {
+      setpwValid(true);
+      setConfirmPwMessage("비밀번호가 일치합니다.");
+    } else {
+      setpwValid(false);
+      setConfirmPwMessage("비밀번호가 일치하지않습니다.");
+    }
+    if (!isFilledPw || !isFilledCpw) {
+      setpwValid(false);
+      setConfirmPwMessage("비밀번호를 입력해주세요.");
+    }
+  }, [pw, cpw]);
+
+  const [nameValue, setNameValue] = useState("");
+  const [isFilledName, setIsFilledName] = useState(false);
+
+  const [emailValue, setEmailValue] = useState("");
+  const [isFilledEmail, setIsFilledEmail] = useState(false);
+  const [emailValid, setEmailValid] = useState("이메일을 입력해 주세요.");
+  const [isEmailValid, setIsEmailValid] = useState(false);
+
+  useEffect(() => {
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-
-    // 입력된 이메일 주소가 정규표현식에 부합하는지 확인
-    if (emailRegex.test(email)) {
-      if (emailValidTextRef.current) {
-        emailValidTextRef.current.textContent = "이메일 형식이 일치합니다.";
-        emailValidBoolean = true;
-      }
+    if (emailRegex.test(emailValue)) {
+      setEmailValid("이메일 합격.");
+      setIsEmailValid(true);
     } else {
-      if (emailValidTextRef.current) {
-        emailValidTextRef.current.textContent =
-          "이메일 형식이 일치하지 않습니다.";
-        emailValidBoolean = false;
-      }
+      setEmailValid("이메일이 형식이 아닙니다.");
+      setIsEmailValid(false);
+    }
+  }, [emailValue]);
+
+  const [invalidReasonText, setInvalidReasonText] = useState("");
+
+  /**
+   * input의 value를 바로 State에 입력하고 isFilled 부울 변수들에 적용시키는 함수
+   * @param e
+   * @param handleValueFunction  값 설정 함수
+   * @param handleFilledFunction 값 여부 확인 함수
+   */
+  const handleValueFilled = (
+    e: any,
+    handleValueFunction: Function,
+    handleFilledFunction: Function
+  ) => {
+    const value = e.target.value;
+    handleValueFunction(value);
+    if (value == "") {
+      handleFilledFunction(false);
+    } else {
+      handleFilledFunction(true);
     }
   };
-  const invalidReasonRef = useRef<HTMLSpanElement>(null);
+
+  /**
+   * 유효여부를 체크하여 최하단에 출력할 메시지를 담는 함수
+   * @param b 유효한지 체크하는 부울변수
+   * @param s 유효하지 않을경우 최하단에 출력할 메시지
+   * @returns 유효하면 0, 유효하지 않으면 1 반환
+   */
+  const checkValidAndFilled = (b: boolean, s: any) => {
+    if (b) {
+      return 0;
+    } else {
+      setInvalidReasonText(s);
+      return 1;
+    }
+  };
 
   /**
    * 제출전 유효 검사 함수
    * @returns
    */
   const isAllValid = () => {
-    if (!idDuplicateCheckBool) {
-      if (invalidReasonRef.current) {
-        invalidReasonRef.current.textContent = "ID가 중복검사가 필요합니다.";
-      }
+    let isNotValid = 0;
+    isNotValid += checkValidAndFilled(
+      isFilledName,
+      "이름을 입력하셔야 합니다."
+    );
+    isNotValid += checkValidAndFilled(pwValid, "비밀번호가 일치하지 않습니다.");
+    isNotValid += checkValidAndFilled(
+      isFilledPw && isFilledCpw,
+      "비밀번호를 입력해야 합니다."
+    );
+    isNotValid += checkValidAndFilled(
+      isNotDuplicate,
+      "ID가 중복검사가 필요합니다."
+    );
+    isNotValid += checkValidAndFilled(
+      checkIdDuplicate,
+      "ID가 중복검사가 필요합니다."
+    );
+    isNotValid += checkValidAndFilled(isFilledId, "ID를 입력해야 합니다.");
+
+    if (isNotValid) {
       return false;
     }
-    if (!idValidBool) {
-      if (invalidReasonRef.current) {
-        invalidReasonRef.current.textContent = "ID가 중복 됩니다.";
-      }
-      return false;
-    }
-    if (!passwordValidBoolean) {
-      if (invalidReasonRef.current) {
-        invalidReasonRef.current.textContent = "비밀번호가 일치하지 않습니다.";
-      }
-      return false;
-    }
-    if (!emailValidBoolean) {
-      if (invalidReasonRef.current) {
-        invalidReasonRef.current.textContent = "이메일이 유효하지 않습니다.";
-      }
-      return false;
-    }
+
     const calendarFields = document.querySelectorAll("select");
     if (calendarFields[0].value == "") {
-      if (invalidReasonRef.current) {
-        invalidReasonRef.current.textContent = "생년월일을 선택해주세요.";
-      }
-      return false;
+      setInvalidReasonText("생년월일을 선택해주세요.");
     }
     if (calendarFields[1].value == "") {
-      if (invalidReasonRef.current) {
-        invalidReasonRef.current.textContent = "생년월일을 선택해주세요.";
-      }
+      setInvalidReasonText("생년월일을 선택해주세요.");
       return false;
     }
     if (calendarFields[2].value == "") {
-      if (invalidReasonRef.current) {
-        invalidReasonRef.current.textContent = "생년월일을 선택해주세요.";
-      }
+      setInvalidReasonText("생년월일을 선택해주세요.");
       return false;
     }
+    if (!isFilledEmail) {
+      setInvalidReasonText("이메일을 입력해 주세요.");
+      return false;
+    }
+    if (!isEmailValid) {
+      setInvalidReasonText("이메일이 유효하지 않습니다.");
+      return false;
+    }
+    setInvalidReasonText("제출이 완료되었습니다.");
     return true;
   };
+
   /**
    * 데이터 제출을 위한 사용자 정의 타입
    */
@@ -158,21 +174,17 @@ export const SignUpBox = () => {
    * @param e 리랜더링을 멈추기 위한 기법으로 잠시 사용
    */
   const submitClick = (e: any) => {
-    const inputFields = document.querySelectorAll("input");
-    const calendarFields = document.querySelectorAll("select");
     const formData: FormData = {};
     if (!isAllValid()) {
-      console.log("not form");
+      console.log("invalid form");
       return false;
     }
-    for (let i = 0; i < inputFields.length; i++) {
-      const inputField = inputFields[i] as HTMLInputElement;
-      formData[inputField.name] = inputField.value;
-    }
-    for (let i = 0; i < calendarFields.length; i++) {
-      const calendarField = calendarFields[i] as HTMLSelectElement;
-      formData[calendarField.name] = calendarField.value;
-    }
+
+    formData["id"] = idValue;
+    formData["password"] = pw;
+    formData["name"] = nameValue;
+    formData["email"] = emailValue;
+
     fetch("/api/submit-form", {
       method: "POST",
       headers: {
@@ -180,82 +192,82 @@ export const SignUpBox = () => {
       },
       body: JSON.stringify(formData),
     });
-    console.log(formData);
 
     e.preventDefault();
     return true;
   };
 
-  /**
-   * 미구현 상태의 취소 버튼 클릭 함수
-   * @param e 리랜더링을 멈추기 위한 기법으로 잠시 사용
-   */
-  const cancelClick = (e: any) => {
-    window.location.href = "/";
-    e.preventDefault();
-  };
-
   return (
     <>
-      <div>
-        <label>ID: </label>
-        <input
-          type="text"
-          ref={idRef}
-          placeholder="아이디"
-          name="id"
-          required
-        />
-        <button type="submit" onClick={IDDuplicateCheck}>
-          중복확인
-        </button>
-        <br />
-        <label>비밀번호: </label>
-        <input
-          type="password"
-          ref={pwRef}
-          placeholder="비밀번호"
-          name="password"
-          onChange={passwordConfirm}
-          required
-        />
-        <br />
-        <label>비밀번호확인: </label>
-        <input
-          type="password"
-          ref={pwCompareRef}
-          placeholder="비밀번호 확인"
-          name="passwordConfirm"
-          onChange={passwordConfirm}
-          required
-        />
-        <br />
-        <span ref={CompareTextRef}>비밀번호를 입력해주세요</span>
-        <br />
-        <label>성명: </label>
-        <input type="text" placeholder="성명" name="name" required />
-        <br />
-        <label>생년월일: </label>
-        <DropDownCalendar />
-        <br />
-        <label>이메일: </label>
-        <input
-          type="text"
-          placeholder="이메일"
-          name="email"
-          onChange={validateEmail}
-          required
-        />
-        <br />
-        <span ref={emailValidTextRef}>이메일을 입력하세요</span> <br />
-        <span ref={invalidReasonRef}></span> <br />
-        <button type="submit" onClick={cancelClick}>
-          취소
-        </button>
-        <button type="submit" onClick={submitClick}>
-          등록
-        </button>
-      </div>
+      <form>
+        <div>
+          <label>ID: </label>
+          <input
+            type="text"
+            placeholder="아이디"
+            required
+            onChange={(event) =>
+              handleValueFilled(event, setIdValue, SetIsFilledId)
+            }
+          />
+          <button onClick={checkDuplicate}>중복확인</button>
+        </div>
+        <div>
+          <label>비밀번호: </label>
+          <input
+            type="password"
+            placeholder="비밀번호"
+            onChange={(event) => handleValueFilled(event, setPw, SetIsFilledPw)}
+            required
+          />
+        </div>
+        <div>
+          <label>비밀번호확인: </label>
+          <input
+            type="password"
+            placeholder="비밀번호 확인"
+            onChange={(event) =>
+              handleValueFilled(event, setCpw, SetIsFilledCpw)
+            }
+            required
+          />
+        </div>
+
+        <div>{confirmPwMessage}</div>
+        <div>
+          <label htmlFor="name">성명: </label>
+          <input
+            type="text"
+            placeholder="성명"
+            required
+            onChange={(event) =>
+              handleValueFilled(event, setNameValue, setIsFilledName)
+            }
+            id="name"
+          />
+        </div>
+        <div>
+          <label>생년월일: </label>
+          <DropDownCalendar />
+        </div>
+        <div>
+          <label>이메일: </label>
+          <input
+            type="text"
+            placeholder="이메일"
+            onChange={(event) =>
+              handleValueFilled(event, setEmailValue, setIsFilledEmail)
+            }
+            required
+          />
+        </div>
+        <div>{emailValid}</div>
+        <div>{invalidReasonText}</div>
+        <div>
+          <Link to="/">취소</Link>
+          <button onClick={submitClick}>등록</button>
+        </div>
+      </form>
     </>
   );
 };
