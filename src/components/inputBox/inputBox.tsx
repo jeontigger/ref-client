@@ -88,8 +88,11 @@ export const IdBox = ({ SetValue, error }: Props) => {
   const [err, setError] = error;
   const cloneError = new ErrorClass(err);
 
+  const [validIdMessage, setvalidIdMessage] = useState("");
+
   // 서버쪽에서 중복 여부만 res받으면 없어질 코드
   const [id, setId] = useState("");
+
   useEffect(() => {
     SetValue(id);
     if (id == "") {
@@ -110,8 +113,10 @@ export const IdBox = ({ SetValue, error }: Props) => {
   const CheckDuplicate = () => {
     if (id == "aaa") {
       cloneError.isDuplicate = true;
+      setvalidIdMessage("중복되는 아이디 입니다.");
     } else {
       cloneError.isDuplicate = false;
+      setvalidIdMessage("사용가능한 아이디 입니다.");
     }
     cloneError.isNeedchkDuplicate = false;
     setError(cloneError);
@@ -128,6 +133,8 @@ export const IdBox = ({ SetValue, error }: Props) => {
         onChange={HandleId}
       />
       <button onClick={CheckDuplicate}>중복확인</button>
+      <br />
+      <>{validIdMessage}</>
     </>
   );
 };
@@ -196,6 +203,7 @@ export const PwBox = ({ SetValue, error }: Props) => {
 export const NameBox = ({ SetValue, error }: Props) => {
   const [err, setError] = error;
   const cloneError = new ErrorClass(err);
+
   const HandleName = (e: any) => {
     let name = e.target.value;
     SetValue(name);
