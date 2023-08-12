@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import {
+  CalendarBox,
   EmailBox,
   ErrorClass,
   IdBox,
@@ -13,69 +14,57 @@ import {
  * @returns
  */
 export const SignUpBox = () => {
-  const err: ErrorClass = new ErrorClass();
+  // const err: ErrorClass = new ErrorClass();
 
   const [id, setId] = useState("");
   const [pw, setPw] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [birth, setBrith] = useState("");
   const [invalidReasonText, setInvalidReasonText] = useState("");
 
-  /**
-   * 제출전 유효 검사 함수
-   * @returns
-   */
-  const isAllValid = () => {
-    let isNotValid = 0;
-    console.log(id);
-    console.log(pw);
-    console.log(name);
-    console.log(email);
-    if (isNotValid) {
-      return false;
-    }
+  const [err, setErr] = useState(new ErrorClass());
 
-    const calendarFields = document.querySelectorAll("select");
-    if (calendarFields[0].value == "") {
-      setInvalidReasonText("생년월일을 선택해주세요.");
-    }
-    if (calendarFields[1].value == "") {
-      setInvalidReasonText("생년월일을 선택해주세요.");
-      return false;
-    }
-    if (calendarFields[2].value == "") {
-      setInvalidReasonText("생년월일을 선택해주세요.");
-      return false;
-    }
-
-    setInvalidReasonText("제출이 완료되었습니다.");
-    return true;
-  };
-
-  /**
-   * 데이터 제출을 위한 사용자 정의 타입
-   */
-  interface FormData {
-    [key: string]: any;
-  }
   /**
    * 제출 버튼 함수.
    * @param e 리랜더링을 멈추기 위한 기법으로 잠시 사용
    */
   const submitClick = (e: any) => {
-    const formData: FormData = {};
-    if (!isAllValid()) {
-      console.log("invalid form");
+    console.log(err);
+    if (!err.isValid()) {
+      setInvalidReasonText(err.getMessage());
       return false;
     }
 
+    const SingUpData = {
+      id: id,
+      pw: pw,
+      name: name,
+      email: email,
+      birth: birth,
+    };
+
+    // 추후 api url 변경 필요
     fetch("/api/submit-form", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(formData),
-    });
+      body: JSON.stringify(SingUpData),
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json;
+        } else {
+          throw new Error("회원가입에 실패했습니다.");
+        }
+      })
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
 
     e.preventDefault();
     return true;
@@ -84,16 +73,15 @@ export const SignUpBox = () => {
   return (
     <>
       <form>
-        <IdBox SetValue={setId} err={err} />
+        <IdBox SetValue={setId} error={[err, setErr]} />
         <br />
-        <PwBox SetValue={setPw} err={err} />
+        <PwBox SetValue={setPw} error={[err, setErr]} />
         <br />
-        <NameBox SetValue={setName} err={err} />
+        <NameBox SetValue={setName} error={[err, setErr]} />
         <br />
-
-        <input type="date" name="dateOfBirth"></input>
+        <CalendarBox SetValue={setBrith} error={[err, setErr]} />
         <br />
-        <EmailBox SetValue={setEmail} err={err} />
+        <EmailBox SetValue={setEmail} error={[err, setErr]} />
         <div>{invalidReasonText}</div>
         <div>
           <Link to="/">취소</Link>
