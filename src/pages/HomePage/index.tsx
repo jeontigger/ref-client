@@ -1,12 +1,14 @@
-import { Header } from "../../components/header/Header"
+import { SignIn } from "../../components/auth/SignIn";
+import { Header } from "../../components/header/Header";
 
 export const Homepage = () => {
-
   return (
     <>
-      <Header/>
+      <Header />
       <div>
         메인페이지
+        <br />
+        <SignIn />
       </div>
     </>
   );
