@@ -1,13 +1,8 @@
-import { Header } from "../../components/header/Header"
-
 export const Homepage = () => {
-
+  const logo = require('./cookingman.png')
   return (
     <>
-      <Header/>
-      <div>
-        메인페이지
-      </div>
+    <img src={logo} alt="logo"/>
     </>
   );
 };
