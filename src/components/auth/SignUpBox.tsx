@@ -9,6 +9,9 @@ import {
   PwBox,
 } from "../inputBox/inputBox";
 
+// 임시 api url
+const [apiUrl, setApiUrl] = useState("");
+
 /**
  * 회원가입 입력상자 컴포넌트
  * @returns
@@ -30,6 +33,7 @@ export const SignUpBox = () => {
    * @param e 리랜더링을 멈추기 위한 기법으로 잠시 사용
    */
   const submitClick = (e: any) => {
+    setApiUrl("https://server-ref.kro.kr/v1/test");
     console.log(err);
     if (!err.isValid()) {
       setInvalidReasonText(err.getMessage());
@@ -45,9 +49,10 @@ export const SignUpBox = () => {
     };
 
     // 추후 api url 변경 필요
-    fetch("/api/submit-form", {
+    fetch(apiUrl, {
       method: "POST",
       headers: {
+        accept: "*/*",
         "Content-Type": "application/json",
       },
       body: JSON.stringify(SingUpData),
