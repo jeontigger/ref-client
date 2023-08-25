@@ -75,23 +75,39 @@ export const SignUpBox = () => {
   };
 
   return (
-    <>
-      <form>
-        <IdBox SetValue={setId} error={[err, setErr]} />
-        <br />
-        <PwBox SetValue={setPw} error={[err, setErr]} />
-        <br />
-        <NameBox SetValue={setName} error={[err, setErr]} />
-        <br />
-        <CalendarBox SetValue={setBrith} error={[err, setErr]} />
-        <br />
-        <EmailBox SetValue={setEmail} error={[err, setErr]} />
-        <div>{invalidReasonText}</div>
-        <div>
-          <Link to="/">취소</Link>
-          <button onClick={submitClick}>등록</button>
-        </div>
-      </form>
-    </>
+    <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+      <div className="sm:mx-auto sm:w-full sm:max-w-sm ">
+        <h2 className="mt-10 mb-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+          회원 가입
+        </h2>
+      </div>
+
+      <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+        <form>
+          <IdBox SetValue={setId} error={[err, setErr]} />
+          <PwBox SetValue={setPw} error={[err, setErr]} />
+          <NameBox SetValue={setName} error={[err, setErr]} />
+          <CalendarBox SetValue={setBrith} error={[err, setErr]} />
+          <EmailBox SetValue={setEmail} error={[err, setErr]} />
+          <div>{invalidReasonText}</div>
+          <div className="flex flex-col mt-10">
+            <div className="flex items-center">
+              <Link
+                to="/"
+                className="text-sm font-medium text-gray-900 whitespace-nowrap mr-2 mr-auto bg-gray-200 hover:bg-gray-300 px-4 py-2 rounded-md border border-gray-400 border-2"
+              >
+                취소
+              </Link>
+              <button
+                onClick={submitClick}
+                className="text-sm font-medium text-white bg-blue-500 hover:bg-blue-600 whitespace-nowrap mr-2 ml-auto px-4 py-2 rounded-md border border-blue-600 border-2"
+              >
+                등록
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
   );
 };
