@@ -9,14 +9,13 @@ import {
   PwBox,
 } from "../inputBox/inputBox";
 
-// 임시 api url
-const [apiUrl, setApiUrl] = useState("");
-
 /**
  * 회원가입 입력상자 컴포넌트
  * @returns
  */
 export const SignUpBox = () => {
+  // 임시 api url
+  const [apiUrl, setApiUrl] = useState("");
   // const err: ErrorClass = new ErrorClass();
 
   const [id, setId] = useState("");
