@@ -127,7 +127,7 @@ export const IdBox = ({ SetValue, error }: Props) => {
       <div className="flex items-center">
         <label
           htmlFor="id"
-          className="text-sm font-medium leading-6 text-gray-900 mr-[8px]"
+          className="text-base font-bold font-medium leading-6 text-gray-900 mr-[8px]"
         >
           ID{" "}
         </label>
@@ -141,7 +141,10 @@ export const IdBox = ({ SetValue, error }: Props) => {
         ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 
         focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
         />
-        <button onClick={CheckDuplicate} className="ml-[8px]">
+        <button
+          onClick={CheckDuplicate}
+          className="text-sm font-medium text-gray-900 whitespace-nowrap mr-2 mr-auto bg-gray-200 hover:bg-gray-300 px-4 py-2 rounded-md border border-gray-400 border-2 ml-[8px]"
+        >
           중복확인
         </button>
       </div>
@@ -186,11 +189,11 @@ export const PwBox = ({ SetValue, error }: Props) => {
   }, [regPw, chkPw]);
 
   return (
-    <div className="flex flex-col">
-      <div className="flex items-center">
+    <div className="flex flex-col mt-4">
+      <div className="flex items-center ">
         <label
           htmlFor="pw"
-          className="block text-sm font-medium leading-6 text-gray-900 mr-[8px]"
+          className="block text-base font-bold font-medium leading-6 text-gray-900 mr-[8px]"
         >
           비밀번호{" "}
         </label>
@@ -208,7 +211,7 @@ export const PwBox = ({ SetValue, error }: Props) => {
       <div className="flex items-center mt-2">
         <label
           htmlFor="cpw"
-          className="text-sm font-medium text-gray-900 whitespace-nowrap mr-[8px]"
+          className="text-base font-bold font-medium text-gray-900 whitespace-nowrap mr-[8px]"
         >
           비밀번호확인{" "}
         </label>
@@ -247,10 +250,10 @@ export const NameBox = ({ SetValue, error }: Props) => {
     setError(cloneError);
   };
   return (
-    <div className="flex items-center">
+    <div className="flex items-center mt-4">
       <label
         htmlFor="name"
-        className="text-sm font-medium text-gray-900 whitespace-nowrap mr-[8px]"
+        className="text-base font-bold font-medium text-gray-900 whitespace-nowrap mr-[8px]"
       >
         성명{" "}
       </label>
@@ -283,10 +286,10 @@ export const CalendarBox = ({ SetValue, error }: Props) => {
     setError(cloneError);
   };
   return (
-    <div className="flex items-center">
+    <div className="flex items-center mt-4">
       <label
         htmlFor="email"
-        className="text-sm font-medium text-gray-900 whitespace-nowrap mr-[8px]"
+        className="text-base font-bold font-medium text-gray-900 whitespace-nowrap mr-[8px]"
       >
         생년월일{" "}
       </label>
@@ -331,11 +334,11 @@ export const EmailBox = ({ SetValue, error }: Props) => {
   };
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col mt-4">
       <div className="flex items-center">
         <label
           htmlFor="email"
-          className="text-sm font-medium text-gray-900 whitespace-nowrap mr-[8px]"
+          className="text-base font-bold font-medium text-gray-900 whitespace-nowrap mr-[8px]"
         >
           이메일
         </label>
