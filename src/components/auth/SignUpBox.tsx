@@ -82,7 +82,7 @@ export const SignUpBox = () => {
         </h2>
       </div>
 
-      <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm ">
+      <div className="mt-2 sm:mx-auto sm:w-full sm:max-w-sm ">
         <form>
           <IdBox SetValue={setId} error={[err, setErr]} />
           <PwBox SetValue={setPw} error={[err, setErr]} />
