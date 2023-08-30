@@ -34,16 +34,19 @@ export const SignInBox = () => {
       />
 
       <div className="flex justify-between mb-4">
-        <Link to="/SignUp" className="">
+        <Link to="/SignUp" className="mr-auto">
           ID/PW 찾기
+        </Link>
+        <Link to="/SignUp" className="ml-auto">
+          회원가입
         </Link>
       </div>
 
-      <div>
-        <Link to="/SignUp" className="">
-          회원가입
-        </Link>
-        <button onClick={submitClick} className="">
+      <div className="flex items-center">
+        <button
+          onClick={submitClick}
+          className="text-sm font-medium text-white bg-blue-500 hover:bg-blue-600 whitespace-nowrap  ml-auto px-4 py-2 rounded-md border border-blue-600 border-2"
+        >
           로그인
         </button>
       </div>
