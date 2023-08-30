@@ -131,22 +131,24 @@ export const IdBox = ({ SetValue, error }: Props) => {
         >
           ID{" "}
         </label>
+        <button
+          onClick={CheckDuplicate}
+          className="text-sm font-medium text-gray-900 whitespace-nowrap mr-2 ml-auto bg-gray-200 hover:bg-gray-300 px-4 py-2 rounded-md border border-gray-400 border-2 ml-[8px]"
+        >
+          중복확인
+        </button>
+      </div>
+      <div className="flex items-center mt-2">
         <input
           type="text"
           id="id"
           placeholder="아이디"
           required
           onChange={HandleId}
-          className="flex-grow rounded-md border-0 py-1.5 text-gray-900 shadow-sm 
-        ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 
-        focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+          className="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm 
+          ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 
+          focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
         />
-        <button
-          onClick={CheckDuplicate}
-          className="text-sm font-medium text-gray-900 whitespace-nowrap mr-2 mr-auto bg-gray-200 hover:bg-gray-300 px-4 py-2 rounded-md border border-gray-400 border-2 ml-[8px]"
-        >
-          중복확인
-        </button>
       </div>
       <div className="flex block items-center ml-auto">{validIdMessage}</div>
     </div>
@@ -190,21 +192,25 @@ export const PwBox = ({ SetValue, error }: Props) => {
 
   return (
     <div className="flex flex-col mt-4">
-      <div className="flex items-center ">
+      <div className="flex items-center">
         <label
           htmlFor="pw"
           className="block text-base font-bold font-medium leading-6 text-gray-900 mr-[8px]"
         >
           비밀번호{" "}
         </label>
-        <div className="mt-2 flex-grow">
+      </div>
+      <div className="flex items-center">
+        <div className="flex-grow">
           <input
             type="password"
             id="pw"
             placeholder="비밀번호"
             onChange={HandlePw}
             required
-            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            className="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm 
+            ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 
+            focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
           />
         </div>
       </div>
@@ -215,6 +221,8 @@ export const PwBox = ({ SetValue, error }: Props) => {
         >
           비밀번호확인{" "}
         </label>
+      </div>
+      <div className="flex items-center">
         <input
           type="password"
           id="cpw"
@@ -250,24 +258,28 @@ export const NameBox = ({ SetValue, error }: Props) => {
     setError(cloneError);
   };
   return (
-    <div className="flex items-center mt-4">
-      <label
-        htmlFor="name"
-        className="text-base font-bold font-medium text-gray-900 whitespace-nowrap mr-[8px]"
-      >
-        성명{" "}
-      </label>
-      <input
-        type="text"
-        id="name"
-        placeholder="성명"
-        required
-        onChange={HandleName}
-        className="
+    <div className="flex flex-col mt-4">
+      <div className="flex items-center">
+        <label
+          htmlFor="name"
+          className="text-base font-bold font-medium text-gray-900 whitespace-nowrap mr-[8px]"
+        >
+          성명{" "}
+        </label>
+      </div>
+      <div className="flex items-center">
+        <input
+          type="text"
+          id="name"
+          placeholder="성명"
+          required
+          onChange={HandleName}
+          className="
         block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm 
         ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 
         focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-      />
+        />
+      </div>
     </div>
   );
 };
@@ -298,6 +310,7 @@ export const CalendarBox = ({ SetValue, error }: Props) => {
         name="dateOfBirth"
         onChange={HandleCalendar}
         required
+        className="ml-auto"
       ></input>
     </div>
   );
@@ -342,6 +355,8 @@ export const EmailBox = ({ SetValue, error }: Props) => {
         >
           이메일
         </label>
+      </div>
+      <div className="flex items-center">
         <input
           type="text"
           id="email"
